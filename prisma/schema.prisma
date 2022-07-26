@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurante {
+  id           String        @id @default(uuid())
+  nome         String
+  funcionarios Funcionario[]
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @updatedAt
+}
+
+model Funcionario {
+  id             String       @id @default(uuid())
+  nome           String
+  proprietario   Boolean
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+  Restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
+  restaurante_id String?
+}
+
+model Produto {
+  id              String            @id @default(uuid())
+  categoria       String
+  descricao       String
+  preco           Float
+  comandas        Comanda[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  Comanda_Produto Comanda_Produto[]
+}
+
+model Mesa {
+  id         String    @id @default(uuid())
+  numero     Int
+  comandas   Comanda[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+model Comanda {
+  id              String            @id @default(uuid())
+  produtos        Produto[]
+  created_at      DateTime          @default(now())
+  updated_at      DateTime          @updatedAt
+  Mesa            Mesa?             @relation(fields: [mesa_id], references: [id])
+  mesa_id         String?
+  Comanda_Produto Comanda_Produto[]
+}
+
+model Comanda_Produto {
+  id         String   @id @default(uuid())
+  quantidade Int
+  produto    Produto  @relation(fields: [produto_id], references: [id])
+  produto_id String // relation scalar field (used in the `@relation` attribute above)
+  comanda    Comanda  @relation(fields: [comanda_id], references: [id])
+  comanda_id String // relation scalar field (used in the `@relation` attribute above)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
