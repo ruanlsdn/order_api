@@ -12,7 +12,7 @@ datasource db {
 
 model Restaurante {
   id           String        @id @default(uuid())
-  nome         String
+  nome         String        @unique
   funcionarios Funcionario[]
   created_at   DateTime      @default(now())
   updated_at   DateTime      @updatedAt
