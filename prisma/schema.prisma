@@ -15,6 +15,7 @@ model Restaurante {
   nome         String        @unique
   funcionarios Funcionario[]
   mesas        Mesa[]
+  produtos     Produto[]
   created_at   DateTime      @default(now())
   updated_at   DateTime      @updatedAt
 }
@@ -38,6 +39,8 @@ model Produto {
   created_at      DateTime          @default(now())
   updated_at      DateTime          @updatedAt
   Comanda_Produto Comanda_Produto[]
+  Restaurante     Restaurante?      @relation(fields: [restaurante_id], references: [id])
+  restaurante_id  String?
 }
 
 model Mesa {
