@@ -14,6 +14,7 @@ model Restaurante {
   id           String        @id @default(uuid())
   nome         String        @unique
   funcionarios Funcionario[]
+  mesas        Mesa[]
   created_at   DateTime      @default(now())
   updated_at   DateTime      @updatedAt
 }
@@ -40,11 +41,13 @@ model Produto {
 }
 
 model Mesa {
-  id         String    @id @default(uuid())
-  numero     Int
-  comandas   Comanda[]
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
+  id             String       @id @default(uuid())
+  numero         Int
+  comandas       Comanda[]
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+  Restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
+  restaurante_id String?
 }
 
 model Comanda {
