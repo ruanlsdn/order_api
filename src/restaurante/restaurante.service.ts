@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateRestauranteDto } from './dto/create-restaurante.dto';
 import { UpdateRestauranteDto } from './dto/update-restaurante.dto';
@@ -28,7 +28,7 @@ export class RestauranteService {
 
   async remove(id: string): Promise<void> {
     await this.prisma.restaurante.delete({ where: { id } }).catch((error) => {
-      throw new NotFoundException(error);
+      throw new BadRequestException(error);
     });
   }
 }
