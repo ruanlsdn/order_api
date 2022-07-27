@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PedidoDto } from './dto/create-comanda-produto.dto';
+import { PedidoDto } from './dto/create-pedido.dto';
 import { PedidoService } from './pedido.service';
 
 @ApiTags('pedido')
