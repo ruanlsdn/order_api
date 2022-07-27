@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { ComandaService } from 'src/comanda/comanda.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateMesaByQuantidadeDto } from './dto/create-mesa-by-quantidade.dto copy';
 import { CreateMesaDto } from './dto/create-mesa.dto';
@@ -8,10 +9,15 @@ import { Mesa } from './entities/mesa.entity';
 
 @Injectable()
 export class MesaService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly comandaService: ComandaService,
+  ) {}
 
   async create(data: CreateMesaDto): Promise<Mesa> {
-    return await this.prisma.mesa.create({ data });
+    const result: Mesa = await this.prisma.mesa.create({ data });
+    await this.comandaService.create(result.id);
+    return result;
   }
 
   async createByQuantidade(dto: CreateMesaByQuantidadeDto): Promise<Mesa[]> {
@@ -30,7 +36,6 @@ export class MesaService {
 
   async findAll(): Promise<Mesa[]> {
     return await this.prisma.mesa.findMany({
-      include: { Restaurante: true },
       orderBy: { numero: Prisma.SortOrder.asc },
     });
   }
@@ -38,7 +43,6 @@ export class MesaService {
   async findOne(id: string): Promise<Mesa> {
     return await this.prisma.mesa.findUnique({
       where: { id },
-      include: { Restaurante: true },
     });
   }
 
