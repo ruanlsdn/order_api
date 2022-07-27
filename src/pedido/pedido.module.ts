@@ -3,6 +3,7 @@ import { PedidoService } from './pedido.service';
 import { PedidoController } from './pedido.controller';
 
 @Module({
+  exports: [PedidoService],
   controllers: [PedidoController],
   providers: [PedidoService],
 })
