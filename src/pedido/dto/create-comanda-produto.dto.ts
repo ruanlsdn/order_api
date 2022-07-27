@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateComandaProdutoDto {
+export class PedidoDto {
   @IsNotEmpty()
   @IsInt()
   quantidade: number;
