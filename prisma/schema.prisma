@@ -26,21 +26,21 @@ model Funcionario {
   proprietario   Boolean
   created_at     DateTime     @default(now())
   updated_at     DateTime     @updatedAt
-  Restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
+  restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
   restaurante_id String?
 }
 
 model Produto {
-  id              String            @id @default(uuid())
-  categoria       String
-  descricao       String
-  preco           Float
-  comandas        Comanda[]
-  created_at      DateTime          @default(now())
-  updated_at      DateTime          @updatedAt
-  Comanda_Produto Comanda_Produto[]
-  Restaurante     Restaurante?      @relation(fields: [restaurante_id], references: [id])
-  restaurante_id  String?
+  id             String       @id @default(uuid())
+  categoria      String
+  descricao      String
+  preco          Float
+  comandas       Comanda[]
+  created_at     DateTime     @default(now())
+  updated_at     DateTime     @updatedAt
+  pedidos        Pedido[]
+  restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
+  restaurante_id String?
 }
 
 model Mesa {
@@ -49,21 +49,21 @@ model Mesa {
   comandas       Comanda[]
   created_at     DateTime     @default(now())
   updated_at     DateTime     @updatedAt
-  Restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
+  restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
   restaurante_id String?
 }
 
 model Comanda {
-  id              String            @id @default(uuid())
-  produtos        Produto[]
-  created_at      DateTime          @default(now())
-  updated_at      DateTime          @updatedAt
-  Mesa            Mesa?             @relation(fields: [mesa_id], references: [id])
-  mesa_id         String?
-  Comanda_Produto Comanda_Produto[]
+  id         String    @id @default(uuid())
+  produtos   Produto[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  mesa       Mesa?     @relation(fields: [mesa_id], references: [id])
+  mesa_id    String?
+  pedidos    Pedido[]
 }
 
-model Comanda_Produto {
+model Pedido {
   id         String   @id @default(uuid())
   quantidade Int
   produto    Produto  @relation(fields: [produto_id], references: [id])
