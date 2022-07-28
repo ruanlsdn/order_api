@@ -35,12 +35,22 @@ model Produto {
   categoria      String
   descricao      String
   preco          Float
-  comandas       Comanda[]
   created_at     DateTime     @default(now())
   updated_at     DateTime     @updatedAt
+  comandas       Comanda[]
   pedidos        Pedido[]
   restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
   restaurante_id String?
+  Categoria      Categoria?   @relation(fields: [categoriaId], references: [id])
+  categoriaId    Int?
+}
+
+model Categoria {
+  id         Int       @id @default(autoincrement())
+  descricao  String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  produtos   Produto[]
 }
 
 model Mesa {
