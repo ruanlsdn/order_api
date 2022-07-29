@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { Categoria } from './entities/categoria.entity';
 
-@ApiTags('categoria')
 @Injectable()
 export class CategoriaService {
   constructor(private readonly prisma: PrismaService) {}
@@ -15,7 +14,9 @@ export class CategoriaService {
   }
 
   async findAll(): Promise<Categoria[]> {
-    return await this.prisma.categoria.findMany({});
+    return await this.prisma.categoria.findMany({
+      orderBy: { descricao: Prisma.SortOrder.asc },
+    });
   }
 
   async findOne(id: number): Promise<Categoria> {

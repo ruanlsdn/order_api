@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PedidoService } from 'src/pedido/pedido.service';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateComandaDto } from './dto/create-comanda.dto';
 import { DividirComandaDto } from './dto/dividir-comanda.dto';
 import { Comanda } from './interfaces/comanda.interface';
 
@@ -11,9 +12,9 @@ export class ComandaService {
     private readonly pedidoService: PedidoService,
   ) {}
 
-  async create(mesa_id: string) {
+  async create(data: CreateComandaDto) {
     return await this.prisma.comanda.create({
-      data: { mesa_id: mesa_id },
+      data,
     });
   }
 
@@ -34,6 +35,29 @@ export class ComandaService {
     });
   }
 
+  async findByMesaId(mesaId: string): Promise<Comanda[]> {
+    return await this.prisma.comanda.findMany({
+      select: {
+        id: true,
+        mesa_id: true,
+        pedidos: {
+          select: {
+            id: true,
+            quantidade: true,
+            produto: {
+              select: {
+                descricao: true,
+                preco: true,
+                Categoria: true,
+              },
+            },
+          },
+        },
+      },
+      where: { mesa_id: mesaId },
+    });
+  }
+
   async findAll(): Promise<Comanda[]> {
     return await this.prisma.comanda.findMany({
       select: {
@@ -51,7 +75,11 @@ export class ComandaService {
   }
 
   async dividirComanda(dto: DividirComandaDto) {
-    const novaComanda: Comanda = await this.create(dto.mesa_id);
+    const novaComanda: Comanda = await this.create({
+      cliente: dto.cliente,
+      mesa_id: dto.mesa_id,
+    });
+
     dto.pedidos.forEach(
       async (data) =>
         await this.pedidoService.decrease(

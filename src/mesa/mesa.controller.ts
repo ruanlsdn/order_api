@@ -17,7 +17,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateMesaByQuantidadeDto } from './dto/create-mesa-by-quantidade.dto copy';
 
 @ApiTags('mesa')
-@Controller('mesa')
+@Controller('api/v1/mesa')
 export class MesaController {
   constructor(private readonly mesaService: MesaService) {}
 
@@ -38,7 +38,7 @@ export class MesaController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Mesa> {
+  async findOne(@Param('id') id: string) {
     return await this.mesaService.findOne(id);
   }
 

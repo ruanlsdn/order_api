@@ -13,7 +13,7 @@ import { Pedido } from './entities/pedido.entity';
 import { PedidoService } from './pedido.service';
 
 @ApiTags('pedido')
-@Controller('pedido')
+@Controller('api/v1/pedido')
 export class PedidoController {
   constructor(private readonly service: PedidoService) {}
 

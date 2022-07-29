@@ -11,7 +11,10 @@ export class PedidoService {
     let pedido: Pedido;
 
     const result: Pedido = await this.prisma.pedido.findFirst({
-      where: { comanda_id: data.comanda_id },
+      where: {
+        comanda_id: data.comanda_id,
+        AND: { produto_id: data.produto_id },
+      },
     });
 
     if (result) {
@@ -22,6 +25,7 @@ export class PedidoService {
           quantidade: Number(result.quantidade + data.quantidade),
         },
       });
+
       return pedido;
     }
 

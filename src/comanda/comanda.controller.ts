@@ -1,13 +1,19 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ComandaService } from './comanda.service';
+import { CreateComandaDto } from './dto/create-comanda.dto';
 import { DividirComandaDto } from './dto/dividir-comanda.dto';
 import { Comanda } from './interfaces/comanda.interface';
 
 @ApiTags('comanda')
-@Controller('comanda')
+@Controller('api/v1/comanda')
 export class ComandaController {
   constructor(private readonly comandaService: ComandaService) {}
+
+  @Post('dividir')
+  create(@Body() dto: CreateComandaDto) {
+    return this.comandaService.create(dto);
+  }
 
   @Get()
   async findAll(): Promise<Comanda[]> {
@@ -19,12 +25,22 @@ export class ComandaController {
     return await this.comandaService.findOne(id);
   }
 
-  @Post('dividir-comanda')
+  @Get('/buscar/:mesaId')
+  async findByMesaId(@Param('mesaId') mesaId: string) {
+    return await this.comandaService.findByMesaId(mesaId);
+  }
+
+  @Post('dividir')
   dividirComanda(@Body() dto: DividirComandaDto) {
     return this.comandaService.dividirComanda(dto);
   }
 
-  @Get('finalizar-comanda/:id')
+  @Get('calcular/:id')
+  async calcularComanda(@Param('id') id: string) {
+    return await this.comandaService.calcularComanda(id);
+  }
+
+  @Get('finalizar/:id')
   async finalizarComanda(@Param('id') id: string) {
     return await this.comandaService.finalizarComanda(id);
   }

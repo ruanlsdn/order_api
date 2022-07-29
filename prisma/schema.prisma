@@ -32,7 +32,6 @@ model Funcionario {
 
 model Produto {
   id             String       @id @default(uuid())
-  categoria      String
   descricao      String
   preco          Float
   created_at     DateTime     @default(now())
@@ -41,8 +40,8 @@ model Produto {
   pedidos        Pedido[]
   restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])
   restaurante_id String?
-  Categoria      Categoria?   @relation(fields: [categoriaId], references: [id])
-  categoriaId    Int?
+  Categoria      Categoria?   @relation(fields: [categoria_id], references: [id])
+  categoria_id   Int?
 }
 
 model Categoria {

@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateRestauranteDto } from './dto/create-restaurante.dto';
 import { UpdateRestauranteDto } from './dto/update-restaurante.dto';
 import { Restaurante } from './entities/restaurante.entity';
+import { RestauranteFindUnique } from './interfaces/restaurante-find-unique.interface';
 
 @Injectable()
 export class RestauranteService {
@@ -16,8 +17,19 @@ export class RestauranteService {
     return await this.prisma.restaurante.findMany({});
   }
 
-  findByName(nome: string): Promise<Restaurante> {
-    return this.prisma.restaurante.findUnique({
+  async findByName(nome: string) {
+    return await this.prisma.restaurante.findUnique({
+      select: {
+        id: true,
+        nome: true,
+        mesas: {
+          select: {
+            id: true,
+            numero: true,
+          },
+        },
+        _count: { select: { mesas: true } },
+      },
       where: { nome },
     });
   }

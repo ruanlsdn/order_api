@@ -5,6 +5,11 @@ export class DividirComandaDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
+  cliente: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
   mesa_id: string;
 
   @IsString()

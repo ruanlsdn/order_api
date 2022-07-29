@@ -15,9 +15,7 @@ export class MesaService {
   ) {}
 
   async create(data: CreateMesaDto): Promise<Mesa> {
-    const result: Mesa = await this.prisma.mesa.create({ data });
-    await this.comandaService.create(result.id);
-    return result;
+    return await this.prisma.mesa.create({ data });
   }
 
   async createByQuantidade(dto: CreateMesaByQuantidadeDto): Promise<Mesa[]> {

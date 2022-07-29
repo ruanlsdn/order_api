@@ -16,7 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Produto } from './entities/produto.entity';
 
 @ApiTags('produto')
-@Controller('produto')
+@Controller('api/v1/produto')
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
@@ -28,6 +28,30 @@ export class ProdutoController {
   @Get()
   async findAll(): Promise<Produto[]> {
     return await this.produtoService.findAll();
+  }
+
+  @Get('/sql/buscar/:descricao/:restaurandeId')
+  async findByDescricao(
+    @Param('descricao') descricao: string,
+    @Param('restaurandeId') restaurandeId: string,
+  ) {
+    return await this.produtoService.findByDescricao(descricao, restaurandeId);
+  }
+
+  @Get('/buscar/:restauranteId')
+  async findByRestauranteId(@Param('restauranteId') restauranteId: string) {
+    return await this.produtoService.findByRestauranteId(restauranteId);
+  }
+
+  @Get('/buscar/:restauranteId/:categoria')
+  async findByRestauranteIdAndCategoria(
+    @Param('restauranteId') restauranteId: string,
+    @Param('categoria') categoria: string,
+  ) {
+    return await this.produtoService.findByRestauranteIdAndCategoria(
+      restauranteId,
+      categoria,
+    );
   }
 
   @Get(':id')

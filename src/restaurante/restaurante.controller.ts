@@ -16,7 +16,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Restaurante } from './entities/restaurante.entity';
 
 @ApiTags('restaurante')
-@Controller('restaurante')
+@Controller('api/v1/restaurante')
 export class RestauranteController {
   constructor(private readonly restauranteService: RestauranteService) {}
 
@@ -33,7 +33,7 @@ export class RestauranteController {
   }
 
   @Get(':nome')
-  async findOne(@Param('nome') nome: string): Promise<Restaurante> {
+  async findOne(@Param('nome') nome: string) {
     return await this.restauranteService.findByName(nome);
   }
 
