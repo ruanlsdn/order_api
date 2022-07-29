@@ -78,7 +78,7 @@ model Pedido {
   quantidade Int
   produto    Produto  @relation(fields: [produto_id], references: [id])
   produto_id String // relation scalar field (used in the `@relation` attribute above)
-  comanda    Comanda  @relation(fields: [comanda_id], references: [id])
+  comanda    Comanda  @relation(fields: [comanda_id], references: [id], onDelete: Cascade)
   comanda_id String // relation scalar field (used in the `@relation` attribute above)
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt

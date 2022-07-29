@@ -39,10 +39,25 @@ export class ProdutoService {
     descricao: string,
     restauranteId: string,
   ): Promise<ProdutoFindByRestauranteId[]> {
-    return await this.prisma
-      .$queryRaw`SELECT p.id, p.descricao, p.preco, c.descricao FROM "Produto" as p
-       LEFT JOIN "Categoria" as c ON p.categoria_id = c.id 
-       WHERE c.descricao like '${descricao}%' AND p.restaurante_id = ${restauranteId};`;
+    return await this.prisma.produto.findMany({
+      select: {
+        id: true,
+        descricao: true,
+        preco: true,
+        Categoria: { select: { descricao: true } },
+      },
+      where: {
+        restaurante_id: restauranteId,
+        AND: { descricao: { contains: descricao } },
+      },
+      orderBy: {
+        Categoria: { descricao: Prisma.SortOrder.asc },
+      },
+    });
+    // return await this.prisma
+    //   .$queryRaw`SELECT p.id, p.descricao, p.preco, c.descricao FROM "Produto" as p
+    //    LEFT JOIN "Categoria" as c ON p.categoria_id = c.id
+    //    WHERE c.descricao like '${descricao}%' AND p.restaurante_id = ${restauranteId};`;
   }
 
   async findByRestauranteIdAndCategoria(
