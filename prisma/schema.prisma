@@ -64,6 +64,7 @@ model Mesa {
 
 model Comanda {
   id         String    @id @default(uuid())
+  cliente    String
   produtos   Produto[]
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt

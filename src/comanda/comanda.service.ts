@@ -23,6 +23,7 @@ export class ComandaService {
       where: { id },
       select: {
         id: true,
+        cliente: true,
         mesa_id: true,
         pedidos: {
           select: {
@@ -39,6 +40,7 @@ export class ComandaService {
     return await this.prisma.comanda.findMany({
       select: {
         id: true,
+        cliente: true,
         mesa_id: true,
         pedidos: {
           select: {
@@ -62,6 +64,7 @@ export class ComandaService {
     return await this.prisma.comanda.findMany({
       select: {
         id: true,
+        cliente: true,
         mesa_id: true,
         pedidos: {
           select: {
@@ -91,7 +94,7 @@ export class ComandaService {
   }
 
   async finalizarComanda(id: string) {
-    await this.pedidoService.delete(id);
+    await this.prisma.comanda.delete({ where: { id } });
   }
 
   async calcularComanda(id: string): Promise<number> {

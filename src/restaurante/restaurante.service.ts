@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateRestauranteDto } from './dto/create-restaurante.dto';
 import { UpdateRestauranteDto } from './dto/update-restaurante.dto';
@@ -26,9 +27,10 @@ export class RestauranteService {
           select: {
             id: true,
             numero: true,
+            _count: true,
           },
+          orderBy: { numero: Prisma.SortOrder.asc },
         },
-        _count: { select: { mesas: true } },
       },
       where: { nome },
     });

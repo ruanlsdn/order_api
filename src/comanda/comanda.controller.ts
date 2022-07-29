@@ -10,8 +10,9 @@ import { Comanda } from './interfaces/comanda.interface';
 export class ComandaController {
   constructor(private readonly comandaService: ComandaService) {}
 
-  @Post('dividir')
+  @Post()
   create(@Body() dto: CreateComandaDto) {
+    console.log(dto);
     return this.comandaService.create(dto);
   }
 

@@ -1,5 +1,6 @@
 export interface Comanda {
   id: string;
+  cliente: string;
   mesa_id: string;
   pedidos?: {
     id: string;
