@@ -1,2 +1,2 @@
 web: npm run start:prod
-web: npx prisma migrate dev
+web: npx prisma db push
