@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  ConsoleLogger,
+  Controller,
+  Get,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ComandaService } from './comanda.service';
 import { CreateComandaDto } from './dto/create-comanda.dto';
@@ -12,7 +19,6 @@ export class ComandaController {
 
   @Post()
   create(@Body() dto: CreateComandaDto) {
-    console.log(dto);
     return this.comandaService.create(dto);
   }
 

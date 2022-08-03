@@ -33,6 +33,7 @@ export class PedidoService {
   }
 
   async decrease(comandaId: string, id: string, quantidade: number) {
+    console.log(id);
     const after: Pedido = await this.findOne(id);
     const before: Pedido = {
       ...after,
