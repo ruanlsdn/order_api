@@ -91,6 +91,12 @@ export class ComandaService {
           data.quantidade,
         ),
     );
+
+    const response = await this.findOne(dto.comanda_id);
+
+    if (response.pedidos.length == 0) {
+      await this.finalizarComanda(response.id);
+    }
   }
 
   async finalizarComanda(id: string) {
