@@ -45,10 +45,14 @@ export class PedidoService {
       produto_id: before.produto_id,
     });
 
-    await this.prisma.pedido.update({
-      where: { id: before.id },
-      data: before,
-    });
+    if (before.quantidade == 0) {
+      await this.delete(before.id);
+    } else {
+      await this.prisma.pedido.update({
+        where: { id: before.id },
+        data: before,
+      });
+    }
 
     return before;
   }
@@ -57,7 +61,11 @@ export class PedidoService {
     return await this.prisma.pedido.findUnique({ where: { id } });
   }
 
-  async delete(comandaId: string) {
+  async delete(id: string) {
+    await this.prisma.pedido.delete({ where: { id: id } });
+  }
+
+  async deleteByComandaId(comandaId: string) {
     await this.prisma.pedido.deleteMany({ where: { comanda_id: comandaId } });
   }
 }
