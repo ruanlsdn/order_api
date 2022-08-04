@@ -23,7 +23,8 @@ model Restaurante {
 model Funcionario {
   id             String       @id @default(uuid())
   nome           String
-  proprietario   Boolean
+  senha          String
+  proprietario   Boolean?     @default(false)
   created_at     DateTime     @default(now())
   updated_at     DateTime     @updatedAt
   restaurante    Restaurante? @relation(fields: [restaurante_id], references: [id])

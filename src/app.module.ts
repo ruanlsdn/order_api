@@ -7,6 +7,8 @@ import { ProdutoModule } from './produto/produto.module';
 import { ComandaModule } from './comanda/comanda.module';
 import { PedidoModule } from './pedido/pedido.module';
 import { CategoriaModule } from './categoria/categoria.module';
+import { FuncionarioModule } from './funcionario/funcionario.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { CategoriaModule } from './categoria/categoria.module';
     ComandaModule,
     PedidoModule,
     CategoriaModule,
+    FuncionarioModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
