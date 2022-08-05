@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Funcionario } from '@prisma/client';
 import { User } from './decorators/funcionario.decorator';
 
-@ApiTags('Auth')
+@ApiTags('auth')
 @Controller('api/v1/auth')
 export class AuthController {
   @UseGuards(AuthGuard('local'))

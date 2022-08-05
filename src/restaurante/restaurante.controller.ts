@@ -32,9 +32,9 @@ export class RestauranteController {
     return await this.restauranteService.findAll();
   }
 
-  @Get(':nome')
-  async findOne(@Param('nome') nome: string) {
-    return await this.restauranteService.findByName(nome);
+  @Get(':id')
+  async findUnique(@Param('id') id: string) {
+    return await this.restauranteService.findUnique(id);
   }
 
   @Patch(':id')

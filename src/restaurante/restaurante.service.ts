@@ -18,7 +18,7 @@ export class RestauranteService {
     return await this.prisma.restaurante.findMany({});
   }
 
-  async findByName(nome: string) {
+  async findUnique(id: string) {
     return await this.prisma.restaurante.findUnique({
       select: {
         id: true,
@@ -32,7 +32,7 @@ export class RestauranteService {
           orderBy: { numero: Prisma.SortOrder.asc },
         },
       },
-      where: { nome },
+      where: { id },
     });
   }
 

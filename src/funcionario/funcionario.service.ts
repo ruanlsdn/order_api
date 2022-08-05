@@ -23,7 +23,7 @@ export class FuncionarioService {
   }
 
   async findOne(nome: string) {
-    return await this.prisma.funcionario.findFirst({ where: { nome } });
+    return await this.prisma.funcionario.findFirstOrThrow({ where: { nome } });
   }
 
   async update(id: string, data: UpdateFuncionarioDto) {
