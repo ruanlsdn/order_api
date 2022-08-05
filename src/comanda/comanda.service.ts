@@ -66,8 +66,9 @@ export class ComandaService {
           comandas[i] = { ...item, total: await this.calcularComanda(item) };
         };
         promise();
+      } else {
+        comandas[i] = { ...item };
       }
-      comandas[i] = { ...item };
     });
 
     return comandas;
