@@ -7,4 +7,5 @@ export interface Comanda {
     quantidade: number;
     produto: { descricao: string; preco: number };
   }[];
+  total?: number;
 }

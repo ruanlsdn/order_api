@@ -37,7 +37,8 @@ export class ComandaService {
   }
 
   async findByMesaId(mesaId: string): Promise<Comanda[]> {
-    return await this.prisma.comanda.findMany({
+    let comandas: Comanda[];
+    let response = await this.prisma.comanda.findMany({
       select: {
         id: true,
         cliente: true,
@@ -58,6 +59,18 @@ export class ComandaService {
       },
       where: { mesa_id: mesaId },
     });
+
+    response.forEach((item, i) => {
+      if (item.pedidos.length > 0) {
+        const promise = async () => {
+          comandas[i] = { ...item, total: await this.calcularComanda(item) };
+        };
+        promise();
+      }
+      comandas[i] = { ...item };
+    });
+
+    return comandas;
   }
 
   async findAll(): Promise<Comanda[]> {
@@ -103,9 +116,9 @@ export class ComandaService {
     await this.prisma.comanda.delete({ where: { id } });
   }
 
-  async calcularComanda(id: string): Promise<number> {
+  async calcularComanda(comanda: Comanda): Promise<number> {
     let soma: number = 0;
-    const comanda: Comanda = await this.findOne(id);
+
     comanda.pedidos.forEach((data) => {
       soma = soma + data.produto.preco * data.quantidade;
     });
