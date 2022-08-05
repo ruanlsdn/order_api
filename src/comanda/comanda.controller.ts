@@ -42,11 +42,6 @@ export class ComandaController {
     return this.comandaService.dividirComanda(dto);
   }
 
-  @Get('calcular/:id')
-  async calcularComanda(@Param('id') id: string) {
-    return await this.comandaService.calcularComanda(id);
-  }
-
   @Get('finalizar/:id')
   async finalizarComanda(@Param('id') id: string) {
     return await this.comandaService.finalizarComanda(id);

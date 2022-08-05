@@ -37,7 +37,7 @@ export class ComandaService {
   }
 
   async findByMesaId(mesaId: string): Promise<Comanda[]> {
-    let comandas: Comanda[];
+    const comandas: Comanda[] = new Array();
     let response = await this.prisma.comanda.findMany({
       select: {
         id: true,
