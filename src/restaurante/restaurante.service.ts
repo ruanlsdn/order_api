@@ -27,6 +27,7 @@ export class RestauranteService {
           select: {
             id: true,
             numero: true,
+            agregada: true,
             _count: true,
           },
           orderBy: { numero: Prisma.SortOrder.asc },
