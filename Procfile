@@ -1,1 +1,1 @@
-web: npx prisma migrate dev; npm run start:prod;
+web: npx prisma migrate dev
