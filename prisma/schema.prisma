@@ -56,6 +56,7 @@ model Categoria {
 model Mesa {
   id             String       @id @default(uuid())
   numero         Int
+  agregada       Boolean?     @default(false)
   comandas       Comanda[]
   created_at     DateTime     @default(now())
   updated_at     DateTime     @updatedAt
