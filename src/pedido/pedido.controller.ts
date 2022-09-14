@@ -5,10 +5,12 @@ import {
   HttpCode,
   HttpStatus,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PedidoDto } from './dto/create-pedido.dto';
+import { UpdatePedidoDto } from './dto/update-pedido.dto';
 import { Pedido } from './entities/pedido.entity';
 import { PedidoService } from './pedido.service';
 
@@ -18,8 +20,16 @@ export class PedidoController {
   constructor(private readonly service: PedidoService) {}
 
   @Post()
-  async createOrUpdate(@Body() dto: PedidoDto): Promise<Pedido> {
-    return await this.service.createOrSum(dto);
+  async create(@Body() dto: PedidoDto): Promise<Pedido> {
+    return await this.service.create(dto);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdatePedidoDto,
+  ): Promise<Pedido> {
+    return await this.service.update(id, dto);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)

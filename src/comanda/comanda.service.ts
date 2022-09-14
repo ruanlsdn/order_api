@@ -99,7 +99,7 @@ export class ComandaService {
 
     dto.pedidos.forEach(
       async (data) =>
-        await this.pedidoService.decrease(
+        await this.pedidoService.subtrairPedidoEInserirEmNovaComanda(
           novaComanda.id,
           data.pedido_id,
           data.quantidade,
